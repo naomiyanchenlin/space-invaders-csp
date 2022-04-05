@@ -18,7 +18,9 @@ import math
 # screen constants
 XMODE = 800
 YMODE = 600
-
+LIGHTCOLOR = (170,170,170)
+DARKCOLOR = (100,100,100)
+white = (255,255,255)
 
 # start pygame
 pygame.init()
@@ -45,10 +47,11 @@ pygame.time.set_timer(bulletEvent, 100)
 KEYDOWN = pygame.USEREVENT + 1
 clock = pygame.time.Clock()
 pygame.time.set_timer(KEYDOWN, 1000)
-#clock code from https://stackoverflow.com/questions/23368999/move-an-object-every-few-seconds-in-pygame and edited
 
 
 #classes
+
+
 class Bullet:
     def __init__(self, x, y):
         self.x = x
@@ -67,6 +70,17 @@ class Bullet:
         else:
             return False
 
+
+class Button:
+    def __init__(self, text, x, y):
+        self.text = text
+        self.x = x
+        self.y = y
+
+    def isClicked(self, x, y):
+        width = 140
+        height = 40
+        self.x/2 <= x <= (self.x/2 + width) and self.y/2 <= y <= (self.y/2 + height)
 
 class Ship:
     fireRate = 3  # public variable, wait 3 seconds between firing
@@ -154,7 +168,6 @@ while running:
                 screen.blit(youwin, (0, 0))
                 running = False
 
-        #code from https://opensource.com/article/17/12/game-python-moving-player and edited
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 if defender.x > 30:
