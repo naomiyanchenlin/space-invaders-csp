@@ -167,8 +167,7 @@ class Ship:
         self.x = xVal
         self.y = yVal
 
-    def moveShip(self, deltaX, deltaY):
-        # conditional // use self. because it is an internal variable within Ship
+    def moveShip(self, deltaX, deltaY):    # conditional // use self. because it is an internal variable within Ship
         self.x += deltaX
         self.y += deltaY
 
@@ -200,7 +199,7 @@ friends = []
 phones = []
 phoneShown = False
 
-# set up invaders on screen
+# set up the rows of invaders
 invaders = []
 for i in range(0,8):
     invaders.append(Invader(30 + 100 * i, -50))
@@ -230,18 +229,18 @@ textBack = smallfont.render('back' , True , WHITE)
 
 #game loop
 running = True
-START = 0
+START = 0                                                   #creating different gameStates
 RULES = 1
 INGAME = 2
 gameState = START
 while running:
-    clock.tick(40)
-    screen.blit(background, (0, 0))
+    clock.tick(40)                                          #40 frames per minute
+    screen.blit(background, (0, 0))                         #put the background on the screen 
 
 
-    if gameState == INGAME:
+    if gameState == INGAME:                                 #INGAME is during the actual game 
         #spawn invaders
-        screen.blit(defenderSprite, (defender.x, defender.y))
+        screen.blit(defenderSprite, (defender.x, defender.y))           #put the sprites onto the screen or where they would be
         for invader in invaders:
             screen.blit(invaderSprite, (invader.x, invader.y))
         for bullet in bullets:
@@ -249,14 +248,16 @@ while running:
         for meteor in meteors:
             screen.blit(meteorSprite, (meteor.x, meteor.y))
         
-        # code from https://stackoverflow.com/questions/34240564/python-pygame-spawning-at-random-time and edited  
+        # code for random range from https://stackoverflow.com/questions/34240564/python-pygame-spawning-at-random-time and edited  
+        # if the meteor has not been used yet during this game, once the programs' randomly selected number is 1, which is at a random 
+        # time, the meteor will spawn at a random locations and the meteorShown will change to true, so this will not run again
         if meteorShown == False:
             if random.randrange(1,2500) == 1:
                 meteorShown = True
                 meteors.append(Meteor(random.randrange(50, 750), 500))
         
-        if phoneShown == False:                               #if the phone hasn't been on screen yet, at a random time,
-            if random.randrange(1,2500) == 1:                 #the phone state will change to true and spawn onto the screen at a random location
+        if phoneShown == False:                               
+            if random.randrange(1,2500) == 1:                 
                 phoneShown = True
                 phones.append(Phone(random.randrange(50, 750), 500))
         
@@ -266,18 +267,18 @@ while running:
             if event.type == pygame.QUIT:
                 running = False
 
-            elif event.type == downEvent:
-                for invader in invaders:
+            elif event.type == downEvent:                           # when it is downEvent, the invaders move down the screen
+                for invader in invaders:                            # if the invaders reach the bottom of the screen, gameover
                     invader.moveShip(0, 5)
                 if invader.y > 250: 
                     screen.blit(gameover, (0, 0))
                     running = False
 
-            elif event.type == bulletEvent:
-                for bullet in bullets:
-                    bullet.moveBullet(0,-10)
-                    if bullet.y < 0:
-                        bullets.remove(bullet)
+            elif event.type == bulletEvent:                         # when it is bulletEvent, the bullets move up at a constant speed
+                for bullet in bullets:                              # if the bullet hits an invader, they both disappear
+                    bullet.moveBullet(0,-10)                        # if the bullets reach the top of the screen, they disappear
+                    if bullet.y < 0:                                # if there are no invaders, which you can find by checking the 
+                        bullets.remove(bullet)                      # length of the array you win and return to start screen
                     else:
                         for invader in invaders:
                             if bullet.hit(invader):
@@ -288,10 +289,10 @@ while running:
                     screen.blit(youwin, (0, 0))
                     gameState = START
 
-            elif event.type == meteorEvent:                  
-                for meteor in meteors:     
-                    if meteor.active == True:                 
-                        meteor.moveMeteor(0,-10)
+            elif event.type == meteorEvent:                                 # during meteorEvent, if meteor.active is True, meaning that
+                for meteor in meteors:                                      # the defender touched the meteor, then it moves up. unlike the
+                    if meteor.active == True:                               # bullet, when the meteor touches the invader, it doesn't disappear
+                        meteor.moveMeteor(0,-10)                            # only the invader disappears, so it can kill a whole column of invaders
                         if meteor.y < 0:
                             meteors.remove(meteor)
                         else:
@@ -315,28 +316,28 @@ while running:
 
             #code from https://opensource.com/article/17/12/game-python-moving-player and edited
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    if defender.x > 30:
+                if event.key == pygame.K_LEFT:                             # if the left key is moved, the defender moves left but is limited to 30
+                    if defender.x > 30:                                    # so it does not go off the screen
                         defender.moveShip(-10,0)
-                        for meteor in meteors:
-                            if meteor.getPower(defender):
+                        for meteor in meteors:                             #for the meteor, if the defender touches it, it sets getPower to True
+                            if meteor.getPower(defender):                  # which sets meteor.active to true so it begins moving
                                 meteor.active = True
                         for phone in phones:                               #for the phone, if it touches the defender, the friend will
-                            if phone.getPower(defender):                   #spawn onto the screen at a random place
+                            if phone.getPower(defender):                   #spawn onto the screen on the side
                                 friend.active = True
                                 friends.append(Friend(25, 100))
-                elif event.key == pygame.K_RIGHT: 
-                    if defender.x < 720:
-                        defender.moveShip(10,0)
-                        for meteor in meteors:
+                elif event.key == pygame.K_RIGHT:                           # same thing as left
+                    if defender.x < 720:                                    # the for loops are used here to check whether the defender has touched the
+                        defender.moveShip(10,0)                             # object yet because the first time they will touch is when the defender moves
+                        for meteor in meteors:                              # to touch it
                             if meteor.getPower(defender):
                                 meteor.active = True
                         for phone in phones:
                             if phone.getPower(defender):
                                 friend.active = True
-                                friends.append(Friend(25, 100))
+                                friends.append(Friend(25, 100))    
                 elif event.key == pygame.K_SPACE:
-                    bullets.append(Bullet(defender.x, defender.y))  
+                    bullets.append(Bullet(defender.x, defender.y))          # if the space key is pressed, a bullet is spawned at the defender's location
 
 
 
@@ -344,7 +345,7 @@ while running:
     elif gameState == START:
         mouse = pygame.mouse.get_pos() 
         for ev in pygame.event.get():
-            if ev.type == pygame.MOUSEBUTTONDOWN: 
+            if ev.type == pygame.MOUSEBUTTONDOWN:     #if the mouse is clicked, check which button the mouse is above
                 if startButton.x <= mouse[0] <= (startButton.x + startButton.width) and startButton.y <= mouse[1] <= (startButton.y + startButton.height):  #if the mouse is clicked on the button the game is started
                     gameState = INGAME 
                 elif quitButton.x <= mouse[0] <= (quitButton.x + quitButton.width) and quitButton.y <= mouse[1] <= (quitButton.y + quitButton.height):  #if the mouse is clicked on the button the game is terminated
@@ -352,6 +353,7 @@ while running:
                 elif rulesButton.x <= mouse[0] <= (rulesButton.x + rulesButton.width) and rulesButton.y <= mouse[1] <= (rulesButton.y + rulesButton.height):  #if the mouse is clicked on the button the game is terminated
                     gameState = RULES
 
+        #if the mouse is on the button, the color is light. if not, the color is dark
         if (startButton.x - 35) <= mouse[0] <= (startButton.x + startButton.width) and startButton.y <= mouse[1] <= (startButton.y + startButton.height):  #if the mouse is clicked on the button the game is started
             pygame.draw.rect(screen, LIGHTCOLOR, [(startButton.x - (35)), startButton.y, startButton.width, startButton.height])
         else:
@@ -367,6 +369,7 @@ while running:
         else:
             pygame.draw.rect(screen, DARKCOLOR, [(rulesButton.x - (35)), rulesButton.y, rulesButton.width, rulesButton.height])
 
+        #putting the text onto the buttons
         screen.blit(textStart, (startButton.x, startButton.y))
         screen.blit(textQuit, (quitButton.x, quitButton.y))
         screen.blit(textRules, (rulesButton.x, rulesButton.y))
@@ -393,7 +396,7 @@ while running:
         text = rulesFont.render("hortizontal row of invaders.", True, WHITE)
         screen.blit(text, [150, 340])
         mouse = pygame.mouse.get_pos() 
-        for ev in pygame.event.get():
+        for ev in pygame.event.get():       #same button code
             if ev.type == pygame.MOUSEBUTTONDOWN: 
                 if quit2Button.x <= mouse[0] <= (quit2Button.x + quit2Button.width) and quit2Button.y <= mouse[1] <= (quit2Button.y + quit2Button.height):  #if the mouse is clicked on the button the game is terminated
                     gameState = START
