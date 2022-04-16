@@ -37,15 +37,15 @@ screen = pygame.display.set_mode((XMODE, YMODE))
 
 
 # set game images 
-background = pygame.image.load('space.jpg')
-invader = pygame.image.load('invaders.png')
-defender = pygame.image.load('defender.png')
-gameover = pygame.image.load('gameover.jpeg')
-youwin = pygame.image.load('youwin.jpeg')
-bullet = pygame.image.load('bullet.png')
-meteor = pygame.image.load('meteor.png')
-friend = pygame.image.load('friend.png')
-phone = pygame.image.load('phone.png')
+background = pygame.image.load('space.jpg')       #https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cnn.com%2Fspecials%2Fspace-science&psig=AOvVaw3Gl4s4KaCS7AhkUJ1MvU1Z&ust=1650236104505000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCOj-p9jWmfcCFQAAAAAdAAAAABAD
+invader = pygame.image.load('invaders.png')       #https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.godisageek.com%2F2020%2F06%2Fspace-invaders-invincible-collection-is-landing-soon%2F&psig=AOvVaw1t3uaT-QurjcColIMdZMMR&ust=1650235763496000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCNjZtbbVmfcCFQAAAAAdAAAAABAJ
+defender = pygame.image.load('defender.png')      #https://www.google.com/url?sa=i&url=https%3A%2F%2Ffavpng.com%2Fpng_view%2Fsprite-spaceshiptwo-spacecraft-sprite-spaceshipone-png%2FrSfVm3nH&psig=AOvVaw2Rsv2KavKEVIT8gpTNgT2t&ust=1650235845333000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCNip0NzVmfcCFQAAAAAdAAAAABAD
+gameover = pygame.image.load('gameover.jpeg')     #https://www.google.com/url?sa=i&url=https%3A%2F%2Ftwitter.com%2Fgame_over_ports&psig=AOvVaw3TbfWu_3nAYjq7Xim29D94&ust=1650233620465000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCMCg5rfNmfcCFQAAAAAdAAAAABAx
+youwin = pygame.image.load('youwin.jpeg')         #https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fvector%2Fpixel-art-8-bit-you-win-text-with-three-winner-golden-cups-on-black-background-gm1268272329-372239713&psig=AOvVaw1NeGLM2WM0srX7_m0V_Czq&ust=1650236140364000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKD5xe3WmfcCFQAAAAAdAAAAABAD
+bullet = pygame.image.load('bullet.png')          #https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pixilart.com%2Fart%2Fgame-jam-blaster-bullet-3f235aba10b1e8f&psig=AOvVaw3pMXjFrzuVplbwJPN8SWvr&ust=1650236193725000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCJCL5ILXmfcCFQAAAAAdAAAAABAD
+meteor = pygame.image.load('meteor.png')          #https://www.kindpng.com/imgv/bbbixx_fireball-clipart-8-bit-8-bit-fireball-hd/
+friend = pygame.image.load('friend.png')          #defender, but edited in photos app
+phone = pygame.image.load('phone.png')            #https://www.vexels.com/png-svg/preview/246281/phone-pixel-art
 
 
 # determine sprite sizes
